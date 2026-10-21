@@ -1,0 +1,52 @@
+{
+  "name": "Victor Shulga",
+  "language": "uk",
+  "source": "victorshulga-design-system (live: victorshulga-design-system.netlify.app). That file wins on any conflict.",
+  "colors": {
+    "bg": "#FFFFFF",
+    "ink": "#161513",
+    "body": "#3D3D3A",
+    "muted": "#6C6A64",
+    "line": "#E8E6E1",
+    "card": "#F7F5F1",
+    "primary": "#E85A4F",
+    "primary_deep": "#C24235",
+    "primary_soft": "#FBEAE8",
+    "on_primary": "#FFFFFF",
+    "positive": "#2D5A4A",
+    "positive_soft": "#E8F0EC",
+    "neutral": "#B9B6AE"
+  },
+  "fonts": {
+    "display": "Inter Tight",
+    "body": "Inter",
+    "mono": "JetBrains Mono",
+    "css": [
+      "https://fonts.googleapis.com/css2?family=Inter+Tight:wght@600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap"
+    ]
+  },
+  "title": {
+    "uppercase": true,
+    "align": "center",
+    "highlight": "pill"
+  },
+  "chip": {
+    "enabled": true,
+    "required": true,
+    "note": "Every creative carries exactly one of the 7 pillar chips. Design / tools / process / 'my stack' = processes.",
+    "rubrics": {
+      "gtm": {"label": "GTM стратегія", "bg": "#E85A4F", "fg": "#FFFFFF"},
+      "outreach": {"label": "Мультиканальний аутріч", "bg": "#161513", "fg": "#FFFFFF"},
+      "social": {"label": "LinkedIn social selling", "bg": "#DE9090", "fg": "#161513"},
+      "sales": {"label": "Продажі", "bg": "#B53D49", "fg": "#FFFFFF"},
+      "am": {"label": "Акаунт-менеджмент", "bg": "#2D5A4A", "fg": "#FFFFFF"},
+      "team": {"label": "Команда", "bg": "#6C6A64", "fg": "#FFFFFF"},
+      "process": {"label": "Процеси", "bg": "#BBD3CB", "fg": "#161513"}
+    }
+  },
+  "footer": {
+    "rule": true,
+    "left": {"photo": "../assets/victor-shulga-avatar.png", "ring": true, "name": "Victor Shulga", "role": "Fractional CRO"},
+    "right": {"logo": "../assets/victor-shulga-mark.svg", "text": "victorshulga.com"}
+  }
+}

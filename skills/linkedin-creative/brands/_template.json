@@ -1,0 +1,45 @@
+{
+  "name": "Company name",
+  "language": "en",
+  "source": "where these values came from: the company's design system URL, brand book, or the CSS of its site",
+  "colors": {
+    "bg": "#FFFFFF",
+    "ink": "#111111",
+    "body": "#333333",
+    "muted": "#6B6B6B",
+    "line": "#E6E6E6",
+    "card": "#F6F6F6",
+    "primary": "#0055FF",
+    "primary_deep": "#003FBF",
+    "primary_soft": "#E8EFFF",
+    "on_primary": "#FFFFFF",
+    "positive": "#0055FF",
+    "positive_soft": "#E8EFFF",
+    "accent": "#FF5500",
+    "accent_soft": "#FFEDE5",
+    "neutral": "#C4C4C4"
+  },
+  "fonts": {
+    "display": "Inter",
+    "body": "Inter",
+    "mono": "JetBrains Mono",
+    "css": [
+      "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap"
+    ],
+    "font_face": "Optional: raw @font-face rules for a font that is not on Google Fonts (point src at a woff2 URL)."
+  },
+  "title": {
+    "uppercase": false,
+    "align": "center",
+    "highlight": "color"
+  },
+  "chip": {
+    "enabled": false,
+    "rubrics": {}
+  },
+  "footer": {
+    "rule": true,
+    "left": {"badge": "CO", "name": "Company name", "role": "What the company does, one line", "role_style": "plain"},
+    "right": {"text": "company.com"}
+  }
+}
