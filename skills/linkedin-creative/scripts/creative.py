@@ -211,7 +211,8 @@ h1.title mark{{{mark}}}
 .cs.cover .hd{{position:absolute;left:56px;top:280px;width:640px;z-index:2;display:flex;flex-direction:column;gap:12px;align-items:flex-start}}
 .cs.cover .hd div{{font-family:var(--display);font-weight:800;font-size:96px;line-height:1.05;color:var(--ink);letter-spacing:-.02em}}
 .cs.cover .hd p{{font-size:36px;line-height:1.3;color:var(--ink);margin-top:18px}}
-.cs.cover .photo{{position:absolute;right:20px;bottom:120px;width:480px;height:820px;object-fit:contain;object-position:bottom}}
+.cs.cover .plate{{position:absolute;right:0;bottom:0;width:580px;height:640px}}
+.cs.cover .photo{{position:absolute;right:0;bottom:0;width:470px;height:805px;object-fit:contain;object-position:bottom}}
 .cs.cover .nm{{position:absolute;left:56px;bottom:90px;font-family:var(--display);font-weight:800;font-size:56px;line-height:1.05;color:var(--ink)}}
 .cs.cover .nm .hl{{padding:4px 12px}}
 .cs .ctah{{font-family:var(--display);font-weight:800;font-size:96px;line-height:1.05;color:var(--ink);letter-spacing:-.02em;margin-top:120px}}
@@ -393,7 +394,10 @@ def slide_cover(brand: dict, lines, sub: str = "") -> str:
         mark = f'<div class="mark">{logo}<span>{esc(R.get("text", ""))}</span></div>'
     rows = "".join(f"<div>{_hl(t, h)}</div>" for t, h in lines)
     photo = brand.get("carousel", {}).get("cover_photo")
-    img = f'<img class="photo" src="{asset(brand, photo)}">' if photo else ""
+    # plate = primary-colour shape behind the cut-out photo (rounded corners via a same-colour stroke)
+    plate = ('<svg class="plate" viewBox="0 0 580 640"><path d="M40 680 L40 250 L400 40 L620 160 L620 680 Z" '
+             'fill="var(--primary)" stroke="var(--primary)" stroke-width="70" stroke-linejoin="round"/></svg>')
+    img = f'{plate}<img class="photo" src="{asset(brand, photo)}">' if photo else ""
     first, _, last = name.rpartition(" ")
     nm = f'<div class="nm">{esc(first)}<br>{_hl(last, True)}</div>' if name else ""
     return (f'<section class="canvas cs cover">{mark}{_go()}{img}<div class="hd">{rows}'
@@ -540,6 +544,7 @@ window.addEventListener('load', async () => {
       const r = el.getBoundingClientRect();
       if (!r.width || !r.height) return;
       let why = '';
+      if (el.closest('.cs.cover .photo, .cs.cover .plate')) return;  // bleed to the edge by design
       if (r.right > cr.right - 8 || r.left < cr.left + 8) why = 'sticks out sideways';
       else if (r.bottom > cr.bottom + 1) why = 'below the canvas';
       else if (fr && r.bottom > fr.top + 1 && !el.closest('.canvas > .swipe')) why = 'runs into the footer';
