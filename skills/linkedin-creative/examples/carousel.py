@@ -21,7 +21,7 @@ slides = [
     cr.slide_content(brand, "Крок 2. Цифри",
         "<p>Кожна цифра на креативі має адресу:</p><ul><li>файл</li><li>звіт</li><li>сторінка на сайті</li></ul>"),
     # CTA: no swipe box
-    cr.slide_cta(brand, "", "Корисно?", "Збережіть, щоб звіряти перед кожним постом.", "+Лайк і коменти"),
+    cr.slide_cta(brand, "Чекліст креативу перед постом: 6 перевірок…"),
 ]
 for f in cr.render_pages(brand, slides, OUT):
     print(f)

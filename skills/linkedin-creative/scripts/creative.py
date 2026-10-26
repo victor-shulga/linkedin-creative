@@ -218,8 +218,23 @@ h1.title mark{{{mark}}}
 .cs.cover .photo{{position:absolute;right:0;bottom:0;width:470px;height:805px;object-fit:contain;object-position:bottom}}
 .cs.cover .nm{{position:absolute;left:56px;bottom:90px;font-family:var(--display);font-weight:800;font-size:56px;line-height:1.05;color:var(--ink)}}
 .cs.cover .nm .hl{{padding:4px 12px}}
-.cs .ctah{{font-family:var(--display);font-weight:800;font-size:96px;line-height:1.05;color:var(--ink);letter-spacing:-.02em;margin-top:120px;text-align:center}}
-.cs .ctap{{font-size:32px;line-height:1.4;color:var(--ink);margin-top:110px;text-align:center}}
+.cs .ctah{{font-family:var(--display);font-weight:800;font-size:96px;line-height:1.05;color:var(--ink);letter-spacing:-.02em;margin-top:auto;text-align:center}}
+.cs .lim{{position:relative;width:720px;height:260px;margin:60px auto 0}}
+.cs .lip{{position:absolute;inset:0 auto auto 0;width:640px;border:2px solid var(--line);border-radius:14px;background:#fff;
+  padding:20px 22px;box-shadow:0 14px 30px rgba(0,0,0,.08)}}
+.cs .lih{{display:flex;align-items:center;gap:14px;font-size:22px;color:var(--muted)}}
+.cs .lih img,.cs .lih .noava{{width:58px;height:58px;border-radius:50%;border:3px solid var(--primary)}}
+.cs .lih b{{color:var(--ink)}} .cs .lih span{{display:block;font-size:17px;color:var(--muted)}}
+.cs .lih i{{margin-left:auto;font-style:normal;font-weight:800;background:var(--card);border-radius:50%;width:44px;height:44px;
+  display:flex;align-items:center;justify-content:center;color:var(--ink)}}
+.cs .lip p{{font-size:22px;color:var(--ink);margin-top:16px;line-height:1.35;width:240px}}
+.cs .lid{{position:absolute;left:290px;top:92px;width:360px;background:#fff;border:2px solid var(--line);border-radius:12px;
+  box-shadow:0 18px 36px rgba(0,0,0,.14);font-weight:600;font-size:23px;color:var(--ink)}}
+.cs .lid div{{padding:18px 22px;display:flex;align-items:center;gap:14px}} .cs .lid svg{{width:28px;height:28px;flex:none}} .cs .lid .sv{{background:var(--primary-soft);border-radius:0 0 10px 10px}}
+.cs .lia{{position:absolute;left:470px;top:200px;width:200px;height:90px}}
+.cs .ctal{{font-family:var(--display);font-weight:800;font-size:64px;line-height:1.2;color:var(--ink);text-align:center;margin-top:80px}}
+.cs .ctal.two{{font-size:56px;margin-top:50px;margin-bottom:auto}}
+.cs .ctal .hl{{padding:2px 16px}}
 .cs .ctaa{{display:inline-block;align-self:center;background:var(--primary);color:var(--on-primary);font-family:var(--display);
   font-weight:800;font-size:56px;padding:14px 24px;margin-top:40px}}
 """
@@ -421,11 +436,22 @@ def slide_stat(brand: dict, title: str, number: str, caption: str, tone: str = "
                          f'<div class="bigc">{esc(caption)}</div>', extra=_go()).replace('class="canvas"', 'class="canvas cs"', 1)
 
 
-def slide_cta(brand: dict, plain: str, hl: str, prompt: str, action: str) -> str:
-    """Last slide: no swipe box. «Корисно?» style headline + prompt + one action block."""
-    h = f"{esc(plain)} {_hl(hl, True)}" if plain else _hl(hl, True)
-    return canvas(brand, f'<div class="ctah">{h}</div><div class="ctap">{esc(prompt)}</div>'
-                         f'<div class="ctaa">{esc(action)}</div>').replace('class="canvas"', 'class="canvas cs"', 1)
+def slide_cta(brand: dict, post_text: str, headline: str = "Було корисно?",
+              save=("Збережіть", "собі на потім."), support=("І підтримайте цей пост", "лайком і коментом")) -> str:
+    """Last slide (Viktor's canon): headline, a mock of the LinkedIn post menu with «Save» pointed at,
+    the save line and the support line, each with one highlighted part. No swipe box.
+    post_text = the first line of the real post, shown in the mock."""
+    L = brand.get("footer", {}).get("left", {})
+    ava = f'<img src="{asset(brand, L["photo"])}">' if L.get("photo") else '<span class="noava"></span>'
+    mock = (f'<div class="lim"><div class="lip"><div class="lih">{ava}<div><b>{esc(L.get("name", ""))}</b> · You'
+            f'<span>{esc(L.get("role", ""))}</span></div><i>···</i></div><p>{esc(post_text)}</p></div>'
+            '<div class="lid"><div><svg viewBox="0 0 24 24"><path d="M12 3l2.8 5.8 6.2.9-4.5 4.4 1 6.2L12 17.3 6.5 20.3l1-6.2L3 9.7l6.2-.9z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>Feature on top of profile</div><div class="sv"><svg viewBox="0 0 24 24"><path d="M6 3h12v18l-6-4-6 4z" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/></svg>Save</div></div>'
+            '<svg class="lia" viewBox="0 0 200 90"><path d="M190 80 C140 70 80 40 20 14 M20 14 L52 12 M20 14 L36 42" '
+            'fill="none" stroke="var(--ink)" stroke-width="5" stroke-linecap="round"/></svg></div>')
+    return canvas(brand, f'<div class="ctah">{esc(headline)}</div>{mock}'
+                         f'<div class="ctal">{_hl(save[0], True)} {esc(save[1])}</div>'
+                         f'<div class="ctal two">{esc(support[0])}<br>{_hl(support[1], True)}</div>'
+                  ).replace('class="canvas"', 'class="canvas cs"', 1)
 
 
 # ---------------------------------------------------------------- pages
