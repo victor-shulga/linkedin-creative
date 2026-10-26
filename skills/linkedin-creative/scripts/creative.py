@@ -200,7 +200,8 @@ h1.title mark{{{mark}}}
 .cs .mark{{position:absolute;top:66px;left:56px;display:flex;align-items:center;gap:12px}}
 .cs .mark img{{height:52px;width:52px}} .cs .mark span{{font-weight:600;font-size:19px;color:var(--primary)}}
 .cs .hl{{background:var(--primary);color:var(--on-primary);padding:4px 18px;display:inline-block}}
-.cs h2.st{{font-family:var(--display);font-weight:800;font-size:72px;line-height:1.15;color:var(--ink);letter-spacing:-.015em}}
+.cs h2.st{{font-family:var(--display);font-weight:800;font-size:72px;line-height:1.15;color:var(--ink);letter-spacing:-.015em;text-align:center;text-wrap:balance}}
+.cs .cb.lead{{text-align:center}}
 .cs .cb{{font-size:40px;line-height:1.38;color:var(--ink);margin:auto 0;padding-bottom:40px}}
 .cs .cb p+p,.cs .cb ul+p,.cs .cb p+ul{{margin-top:34px}}
 .cs .cb.lead{{margin:40px 0 0;padding:0;font-size:34px}}
@@ -210,16 +211,16 @@ h1.title mark{{{mark}}}
 .cs .big.ink{{color:var(--ink)}} .cs .big.pos{{color:var(--positive)}} .cs .big.warn{{color:var(--primary)}}
 .cs .bigc{{font-size:36px;line-height:1.4;color:var(--ink);text-align:center;margin:30px 0 auto}}
 .cs.cover{{padding-top:0}}
-.cs.cover .hd{{position:absolute;left:56px;top:280px;width:640px;z-index:2;display:flex;flex-direction:column;gap:12px;align-items:flex-start}}
+.cs.cover .hd{{position:absolute;left:56px;top:280px;width:968px;z-index:2;display:flex;flex-direction:column;gap:12px;align-items:flex-start}}
 .cs.cover .hd div{{font-family:var(--display);font-weight:800;font-size:96px;line-height:1.05;color:var(--ink);letter-spacing:-.02em}}
 .cs.cover .hd p{{font-size:36px;line-height:1.3;color:var(--ink);margin-top:18px}}
 .cs.cover .plate{{position:absolute;right:0;bottom:0;width:580px;height:640px}}
 .cs.cover .photo{{position:absolute;right:0;bottom:0;width:470px;height:805px;object-fit:contain;object-position:bottom}}
 .cs.cover .nm{{position:absolute;left:56px;bottom:90px;font-family:var(--display);font-weight:800;font-size:56px;line-height:1.05;color:var(--ink)}}
 .cs.cover .nm .hl{{padding:4px 12px}}
-.cs .ctah{{font-family:var(--display);font-weight:800;font-size:96px;line-height:1.05;color:var(--ink);letter-spacing:-.02em;margin-top:120px}}
-.cs .ctap{{font-size:32px;line-height:1.4;color:var(--ink);margin-top:110px}}
-.cs .ctaa{{display:inline-block;align-self:flex-start;background:var(--primary);color:var(--on-primary);font-family:var(--display);
+.cs .ctah{{font-family:var(--display);font-weight:800;font-size:96px;line-height:1.05;color:var(--ink);letter-spacing:-.02em;margin-top:120px;text-align:center}}
+.cs .ctap{{font-size:32px;line-height:1.4;color:var(--ink);margin-top:110px;text-align:center}}
+.cs .ctaa{{display:inline-block;align-self:center;background:var(--primary);color:var(--on-primary);font-family:var(--display);
   font-weight:800;font-size:56px;padding:14px 24px;margin-top:40px}}
 """
 

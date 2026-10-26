@@ -22,6 +22,7 @@ Structure ported from the Figma `linkedin-carousel` skill (Viktor's own carousel
 | stat | `cr.slide_stat(brand, title, "7 з 17", caption, tone)` | section title + one 240 px number + caption. `pos` only for a real win, `warn` for a loss, `ink` otherwise |
 | last · cta | `cr.slide_cta(brand, "", "Корисно?", prompt, "+Лайк і коменти")` | no swipe box; headline 96 px with one highlighted word, prompt, one coral action block. |
 
+Slide titles and the CTA are centered; the cover headline stays left (Viktor's reference) and fits 1–2 lines.
 Swipe box (coral, white →) on every slide but the last. Then `cr.render_pages(brand, slides, out_dir)`.
 `qa()` skips the density checks on these slides: one-thought slides keep air by design. See `examples/carousel.py`.
 
