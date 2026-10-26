@@ -18,7 +18,7 @@ Structure ported from the Figma `linkedin-carousel` skill (Viktor's own carousel
 | slide | builder | contents |
 |---|---|---|
 | 1 · cover | `cr.slide_cover(brand, [(text, hl), ...], sub)` | brand mark + site top-left, swipe box top-right, headline 96 px left (1–2 highlighted words: the main noun), subline 36 px, cover photo bottom-right (`brand.carousel.cover_photo`), stacked name bottom-left with the last name highlighted. No footer |
-| content | `cr.slide_content(brand, "Крок 2. Вейтлист", "<p>…</p><ul><li>…</li></ul>")` | section title 72 px top-left («Контекст», «Проблема», «Крок 1.», «Приклад», «Висновок»), body 40 px, `→` list items; footer |
+| content | `cr.slide_content(brand, "Крок 2. Вейтлист", "<p>одна думка</p>", visual=html)` | section title 72 px top-left («Контекст», «Проблема», «Крок 1.», «Приклад», «Висновок»), 1–2 lines of text, then the slide's **visual** (timeline, bars, dots, funnel, mock-up, ✓/✕ table); footer. **Every slide carries a visual**: a text-only slide is a defect |
 | stat | `cr.slide_stat(brand, title, "7 з 17", caption, tone)` | section title + one 240 px number + caption. `pos` only for a real win, `warn` for a loss, `ink` otherwise |
 | last · cta | `cr.slide_cta(brand, "", "Корисно?", prompt, "+Лайк і коменти")` | no swipe box; headline 96 px with one highlighted word, prompt, one coral action block. |
 

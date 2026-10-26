@@ -203,6 +203,8 @@ h1.title mark{{{mark}}}
 .cs h2.st{{font-family:var(--display);font-weight:800;font-size:72px;line-height:1.15;color:var(--ink);letter-spacing:-.015em}}
 .cs .cb{{font-size:40px;line-height:1.38;color:var(--ink);margin:auto 0;padding-bottom:40px}}
 .cs .cb p+p,.cs .cb ul+p,.cs .cb p+ul{{margin-top:34px}}
+.cs .cb.lead{{margin:40px 0 0;padding:0;font-size:34px}}
+.cs .vis{{margin:auto 0;padding:24px 0 34px}}
 .cs .cb ul{{list-style:none}} .cs .cb li{{margin:18px 0}} .cs .cb li:before{{content:"→ ";color:var(--primary);font-weight:800}}
 .cs .big{{font-family:var(--display);font-weight:800;font-size:240px;line-height:1;text-align:center;letter-spacing:-.03em;margin-top:auto}}
 .cs .big.ink{{color:var(--ink)}} .cs .big.pos{{color:var(--positive)}} .cs .big.warn{{color:var(--primary)}}
@@ -404,9 +406,11 @@ def slide_cover(brand: dict, lines, sub: str = "") -> str:
             + (f"<p>{esc(sub)}</p>" if sub else "") + f"</div>{nm}</section>")
 
 
-def slide_content(brand: dict, title: str, body: str, last: bool = False) -> str:
-    """title = section name («Крок 1.», «Контекст»), body = HTML (<p>, <ul><li>) at 32 px."""
-    return canvas(brand, f'<h2 class="st">{esc(title)}</h2><div class="cb">{body}</div>',
+def slide_content(brand: dict, title: str, body: str, visual: str = "", last: bool = False) -> str:
+    """title = section name («Крок 1.», «Контекст»), body = 1-2 short lines of HTML, visual = the slide's chart,
+    scheme or mock-up (every slide carries one: text only labels it)."""
+    vis = f'<div class="vis">{visual}</div>' if visual else ""
+    return canvas(brand, f'<h2 class="st">{esc(title)}</h2><div class="cb{" lead" if visual else ""}">{body}</div>{vis}',
                   extra=("" if last else _go())).replace('class="canvas"', 'class="canvas cs"', 1)
 
 
