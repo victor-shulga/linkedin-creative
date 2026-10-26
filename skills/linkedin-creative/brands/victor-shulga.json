@@ -48,5 +48,6 @@
     "rule": true,
     "left": {"photo": "../assets/victor-shulga-avatar.png", "ring": true, "name": "Victor Shulga", "role": "Fractional CRO"},
     "right": {"logo": "../assets/victor-shulga-mark.svg", "text": "victorshulga.com"}
-  }
+  },
+  "carousel": {"cover_photo": "../assets/victor-shulga-cover.png"}
 }

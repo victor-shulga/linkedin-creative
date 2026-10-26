@@ -193,6 +193,31 @@ h1.title mark{{{mark}}}
 .footer .frole.plain{{background:none;color:var(--muted);padding:0;letter-spacing:.02em;text-transform:none;font-size:14px;font-weight:500}}
 .footer .fr img{{height:44px;width:44px}}
 .footer .site{{font-weight:600;color:var(--primary);font-size:16px}}
+.cs .content{{padding-top:94px}}
+.cs .content:has(.cb){{justify-content:flex-start}}
+.cs .go{{position:absolute;top:56px;right:56px;width:100px;height:92px;border-radius:4px;background:var(--primary);
+  color:var(--on-primary);display:flex;align-items:center;justify-content:center;font-family:var(--display);font-weight:800;font-size:56px}}
+.cs .mark{{position:absolute;top:66px;left:56px;display:flex;align-items:center;gap:12px}}
+.cs .mark img{{height:52px;width:52px}} .cs .mark span{{font-weight:600;font-size:19px;color:var(--primary)}}
+.cs .hl{{background:var(--primary);color:var(--on-primary);padding:4px 18px;display:inline-block}}
+.cs h2.st{{font-family:var(--display);font-weight:800;font-size:72px;line-height:1.15;color:var(--ink);letter-spacing:-.015em}}
+.cs .cb{{font-size:40px;line-height:1.38;color:var(--ink);margin:auto 0;padding-bottom:40px}}
+.cs .cb p+p,.cs .cb ul+p,.cs .cb p+ul{{margin-top:34px}}
+.cs .cb ul{{list-style:none}} .cs .cb li{{margin:18px 0}} .cs .cb li:before{{content:"→ ";color:var(--primary);font-weight:800}}
+.cs .big{{font-family:var(--display);font-weight:800;font-size:240px;line-height:1;text-align:center;letter-spacing:-.03em;margin-top:auto}}
+.cs .big.ink{{color:var(--ink)}} .cs .big.pos{{color:var(--positive)}} .cs .big.warn{{color:var(--primary)}}
+.cs .bigc{{font-size:36px;line-height:1.4;color:var(--ink);text-align:center;margin:30px 0 auto}}
+.cs.cover{{padding-top:0}}
+.cs.cover .hd{{position:absolute;left:56px;top:280px;width:640px;z-index:2;display:flex;flex-direction:column;gap:12px;align-items:flex-start}}
+.cs.cover .hd div{{font-family:var(--display);font-weight:800;font-size:96px;line-height:1.05;color:var(--ink);letter-spacing:-.02em}}
+.cs.cover .hd p{{font-size:36px;line-height:1.3;color:var(--ink);margin-top:18px}}
+.cs.cover .photo{{position:absolute;right:20px;bottom:120px;width:480px;height:820px;object-fit:contain;object-position:bottom}}
+.cs.cover .nm{{position:absolute;left:56px;bottom:90px;font-family:var(--display);font-weight:800;font-size:56px;line-height:1.05;color:var(--ink)}}
+.cs.cover .nm .hl{{padding:4px 12px}}
+.cs .ctah{{font-family:var(--display);font-weight:800;font-size:96px;line-height:1.05;color:var(--ink);letter-spacing:-.02em;margin-top:120px}}
+.cs .ctap{{font-size:32px;line-height:1.4;color:var(--ink);margin-top:110px}}
+.cs .ctaa{{display:inline-block;align-self:flex-start;background:var(--primary);color:var(--on-primary);font-family:var(--display);
+  font-weight:800;font-size:56px;padding:14px 24px;margin-top:40px}}
 """
 
 
@@ -345,6 +370,55 @@ def dots(total: int, on: int) -> str:
     return '<div class="dots">' + "".join(f'<i class="{"on" if k < on else ""}"></i>' for k in range(total)) + "</div>"
 
 
+# ---------------------------------------------------------------- carousel slides
+# Four slide types: cover, content, stat, cta. One thought per slide, 7-10 slides.
+# Swipe box top-right on every slide but the cta. Highlight = 1-2 words on the cover, 1 on the cta.
+
+def _go() -> str:
+    return '<div class="go">→</div>'
+
+
+def _hl(text: str, on: bool) -> str:
+    return f'<span class="hl">{esc(text)}</span>' if on else esc(text)
+
+
+def slide_cover(brand: dict, lines, sub: str = "") -> str:
+    """lines = [(text, highlighted), ...], one per headline row. Photo from brand carousel.cover_photo,
+    name from footer.left.name (last word highlighted). No footer on the cover."""
+    ft = brand.get("footer", {})
+    R, name = ft.get("right", {}), ft.get("left", {}).get("name", "")
+    mark = ""
+    if R.get("logo") or R.get("text"):
+        logo = f'<img src="{asset(brand, R["logo"])}">' if R.get("logo") else ""
+        mark = f'<div class="mark">{logo}<span>{esc(R.get("text", ""))}</span></div>'
+    rows = "".join(f"<div>{_hl(t, h)}</div>" for t, h in lines)
+    photo = brand.get("carousel", {}).get("cover_photo")
+    img = f'<img class="photo" src="{asset(brand, photo)}">' if photo else ""
+    first, _, last = name.rpartition(" ")
+    nm = f'<div class="nm">{esc(first)}<br>{_hl(last, True)}</div>' if name else ""
+    return (f'<section class="canvas cs cover">{mark}{_go()}{img}<div class="hd">{rows}'
+            + (f"<p>{esc(sub)}</p>" if sub else "") + f"</div>{nm}</section>")
+
+
+def slide_content(brand: dict, title: str, body: str, last: bool = False) -> str:
+    """title = section name («Крок 1.», «Контекст»), body = HTML (<p>, <ul><li>) at 32 px."""
+    return canvas(brand, f'<h2 class="st">{esc(title)}</h2><div class="cb">{body}</div>',
+                  extra=("" if last else _go())).replace('class="canvas"', 'class="canvas cs"', 1)
+
+
+def slide_stat(brand: dict, title: str, number: str, caption: str, tone: str = "ink") -> str:
+    """tone: ink (neutral) | pos (a real win, positive colour) | warn (a loss, primary colour)."""
+    return canvas(brand, f'<h2 class="st">{esc(title)}</h2><div class="big {tone}">{esc(number)}</div>'
+                         f'<div class="bigc">{esc(caption)}</div>', extra=_go()).replace('class="canvas"', 'class="canvas cs"', 1)
+
+
+def slide_cta(brand: dict, plain: str, hl: str, prompt: str, action: str) -> str:
+    """Last slide: no swipe box. «Корисно?» style headline + prompt + one action block."""
+    h = f"{esc(plain)} {_hl(hl, True)}" if plain else _hl(hl, True)
+    return canvas(brand, f'<div class="ctah">{h}</div><div class="ctap">{esc(prompt)}</div>'
+                         f'<div class="ctaa">{esc(action)}</div>').replace('class="canvas"', 'class="canvas cs"', 1)
+
+
 # ---------------------------------------------------------------- pages
 
 def canvas(brand: dict, body: str, title=None, sub=None, chip_key=None, with_footer=True, extra="") -> str:
@@ -482,6 +556,7 @@ window.addEventListener('load', async () => {
   });
   document.querySelectorAll('.canvas').forEach((c, pi) => {
     const content = c.querySelector('.content'); if (!content) return;
+    if (c.classList.contains('cs')) return;  // one-thought carousel slides keep air by design
     const foot = c.querySelector('.footer');
     const limit = foot ? foot.getBoundingClientRect().top : c.getBoundingClientRect().bottom;
     let maxB = content.getBoundingClientRect().top;

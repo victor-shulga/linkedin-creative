@@ -10,20 +10,20 @@ Top to bottom: chip (if the brand has one) → title → subheading (mono, one l
 Budget: header ≈ 230 px, footer 150 px, so the body gets ≈ 930 px. A 3-column grid holds two rows of
 cards of ≈ 200 px plus one chart band of ≈ 300 px. Measure with `qa()`, do not guess.
 
-## Carousel: 1080×1350 × 5–10 slides, PNGs + PDF
+## Carousel: 1080×1350 × 7–10 slides, PNGs + PDF
 
 LinkedIn posts a carousel as a **document**: upload `slides.pdf`. The PNGs are for preview and for other networks.
+Structure ported from the Figma `linkedin-carousel` skill (Viktor's own carousels). Rule: **one thought = one slide**.
 
-| slide | contents |
-|---|---|
-| 1 · cover | chip + title (the NAME of the carousel) + one big visual or number; swipe arrow top-right |
-| 2…N-1 · content | one thought per slide: eyebrow («Крок 2»), a short slide title, 1–3 lines of body OR one visual |
-| stat slide | one huge number + what it is; «positive» colour only for a real win |
-| last | no swipe arrow; a directive («Збережіть…») or, on a lead-magnet post only, the gate |
+| slide | builder | contents |
+|---|---|---|
+| 1 · cover | `cr.slide_cover(brand, [(text, hl), ...], sub)` | brand mark + site top-left, swipe box top-right, headline 96 px left (1–2 highlighted words: the main noun), subline 36 px, cover photo bottom-right (`brand.carousel.cover_photo`), stacked name bottom-left with the last name highlighted. No footer |
+| content | `cr.slide_content(brand, "Крок 2. Вейтлист", "<p>…</p><ul><li>…</li></ul>")` | section title 72 px top-left («Контекст», «Проблема», «Крок 1.», «Приклад», «Висновок»), body 40 px, `→` list items; footer |
+| stat | `cr.slide_stat(brand, title, "7 з 17", caption, tone)` | section title + one 240 px number + caption. `pos` only for a real win, `warn` for a loss, `ink` otherwise |
+| last · cta | `cr.slide_cta(brand, "", "Корисно?", prompt, "+Лайк і коменти")` | no swipe box; headline 96 px with one highlighted word, prompt, one coral action block. |
 
-Every slide: page counter `<div class="pageno">03 / 08</div>`, footer. Build each slide with
-`cr.canvas(brand, body, title=None, extra=...)`, then `cr.render_pages(brand, slides, out_dir, extra_css=...)`.
-Body text on slides is big: 28–32 px; slide titles 56–72 px. See `examples/carousel.py`.
+Swipe box (coral, white →) on every slide but the last. Then `cr.render_pages(brand, slides, out_dir)`.
+`qa()` skips the density checks on these slides: one-thought slides keep air by design. See `examples/carousel.py`.
 
 ## Lead magnet: cover + the magnet
 

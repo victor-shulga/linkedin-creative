@@ -40,7 +40,7 @@ Files in this skill:
 | the post… | format | output |
 |---|---|---|
 | explains one idea that has a shape (proportion, stages, change over time, a system) | **infographic** 1080×1350 | 1 PNG |
-| teaches step by step, one thought per slide, the value IS the post | **carousel** 1080×1350 × 5–10 | PNG per slide + `slides.pdf` (upload as a document) |
+| teaches step by step, one thought per slide, the value IS the post | **carousel** 1080×1350 × 7–10 | PNG per slide + `slides.pdf` (upload as a document) |
 | gives something away for a comment | **lead magnet**: cover 1080×1350 with the comment gate + the magnet (A4 PDF, or a link) | `cover.png` + `magnet.pdf` |
 
 A lead-magnet post is **never** a carousel: a carousel hands the value over in the feed, the magnet must
@@ -88,7 +88,7 @@ Kit cheat-sheet (all classes take colours from the brand file, never hard-code a
 - Bands: `cr.rule(label, text, muted, number)` is the dark payoff band; `cr.gate(word, what)` is the comment gate
 - Pages: `cr.page(...)` one image; `cr.canvas(...)` one slide → `cr.render_pages(brand, [slides], out_dir)`
   writes `slide-01.png…` + `slides.pdf`; `cr.document(brand, pages, size="a4")` + `cr.render_pdf()` for a magnet
-- Carousel furniture: `<div class="pageno">02 / 08</div>`, `<div class="swipe">→</div>` (not on the last slide)
+- Carousel: build every slide with `cr.slide_cover / slide_content / slide_stat / slide_cta` (structure in `references/formats.md`), never hand-made canvases
 - `title=("LINE", "WORD")` → the highlighted part is ONE word; `title="Line"` → no highlight
 
 Rows are the shock absorber: if `qa()` reports an empty band, grow rows, enlarge charts or add a block;

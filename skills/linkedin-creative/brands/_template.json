@@ -41,5 +41,6 @@
     "rule": true,
     "left": {"badge": "CO", "name": "Company name", "role": "What the company does, one line", "role_style": "plain"},
     "right": {"text": "company.com"}
-  }
+  },
+  "carousel": {"cover_photo": null}
 }
